@@ -62,11 +62,21 @@ describe Oystercard do
   # subject.touch_in
   # expect{ subject.touch_out }.to change { subject.balance }.by(-Oystercard::MINIMUM_BALANCE)
   # end
-  let(:station){ double :station }
+  let(:station){ double :station } #=> because you cannot access station from outside
   it 'can store the name of the station when touch in' do
   subject.top_up(2)
   subject.touch_in(station)
   expect(subject.entry_station).to eq station
   end
 
+  it 'check the card has empty list by default' do
+    expect(subject.history).to eq([])
+  end
+
+  it 'return completed_journey after touching in & out' do
+    subject.top_up(10)
+    subject.touch_in("Barbican")
+    subject.touch_out("Eltham")
+    expect(subject.completed_journey).to eq({start: "Barbican", end: "Eltham"})
+  end
 end

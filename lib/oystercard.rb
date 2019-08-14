@@ -1,5 +1,5 @@
 class Oystercard
-  attr_reader :oystercard, :balance, :entry_station
+  attr_reader :oystercard, :balance, :entry_station, :history, :completed_journey
   # def oystercard
   #   @oystercard
   # end
@@ -9,6 +9,7 @@ class Oystercard
     # @oystercard = 0
     @balance = 0
     # @state = false
+    @history = []
   end
 
   # def balance
@@ -35,7 +36,7 @@ class Oystercard
     # elsif @card ==false
     #   return false
     # end
-    @entry_station != nil 
+    @entry_station != nil
   end
 
   def touch_in(station)
@@ -49,7 +50,11 @@ class Oystercard
     # @card = false
     deduct(2)
     # @state = false
+    @exit_station = station
+    @completed_journey = {start: @entry_station, end: @exit_station}
     @entry_station = nil
+    @history << @completed_journey
+
   end
 
   # def not_enough?
