@@ -1,13 +1,14 @@
 class Oystercard
-  attr_reader :oystercard, :balance
+  attr_reader :oystercard, :balance, :entry_station
   # def oystercard
   #   @oystercard
   # end
   MAX_CONSTANT = 90
+  MIN_CONSTANT = 1
   def initialize
     # @oystercard = 0
     @balance = 0
-    @state = false
+    # @state = false
   end
 
   # def balance
@@ -25,27 +26,38 @@ class Oystercard
     @balance + money > MAX_CONSTANT
   end
 
-  def deduct(money)
-    @balance -= money
-  end
+
 
   def in_journey?
-    @state
+    # @state
     # if @card == true
     #   return true
     # elsif @card ==false
     #   return false
     # end
+    @entry_station != nil 
   end
 
-  def touch_in
+  def touch_in(station)
     # @card = true
-    @state = true
+    fail "Not enuf money!" if @balance < MIN_CONSTANT
+    # @state = true
+    @entry_station = station
   end
 
-  def touch_out
+  def touch_out(station)
     # @card = false
-    @state = false
+    deduct(2)
+    # @state = false
+    @entry_station = nil
+  end
+
+  # def not_enough?
+  #   @balance < 1
+  # end
+  private
+  def deduct(money)
+    @balance -= money
   end
 
 end
